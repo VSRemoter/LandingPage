@@ -162,13 +162,13 @@ p {
 }
 
 .btn-primary {
-    background: var(--white);
-    color: var(--black);
+    background: var(--primary);
+    color: var(--white);
     box-shadow: var(--shadow-lg);
 }
 
 .btn-primary:hover {
-    background: var(--gray-900);
+    background: var(--primary-dark);
     color: var(--white);
     transform: translateY(-2px);
     box-shadow: var(--shadow-xl), var(--shadow-glow);
@@ -251,6 +251,12 @@ p {
 
 .nav-logo i {
     font-size: var(--font-size-2xl);
+}
+
+.nav-logo .logo-image {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
 }
 
 .nav-menu {
@@ -813,6 +819,86 @@ section {
     margin: 0;
 }
 
+/* Use Cases Section */
+.use-cases {
+    background: transparent;
+}
+
+.use-cases-bullet-list {
+    max-width: 700px;
+    margin: 0 auto var(--spacing-4xl);
+}
+
+.use-cases-bullet-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.use-cases-bullet-list li {
+    position: relative;
+    padding: var(--spacing-lg) 0 var(--spacing-lg) var(--spacing-2xl);
+    border-bottom: 1px solid var(--gray-800);
+    color: var(--gray-400);
+    line-height: 1.6;
+    font-size: var(--font-size-lg);
+}
+
+.use-cases-bullet-list li:last-child {
+    border-bottom: none;
+}
+
+.use-cases-bullet-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: calc(50% - 4px);
+    width: 8px;
+    height: 8px;
+    background: var(--primary);
+    border-radius: 50%;
+    transition: all var(--transition-normal);
+}
+
+.use-cases-bullet-list li:hover::before {
+    background: var(--primary-light);
+    transform: scale(1.2);
+    box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+}
+
+.use-cases-bullet-list li:hover {
+    color: var(--white);
+}
+
+.use-cases-bullet-list strong {
+    color: var(--white);
+    font-weight: 600;
+}
+
+.use-cases-cta {
+    text-align: center;
+    padding: var(--spacing-3xl);
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--gray-800);
+}
+
+.use-cases-cta h3 {
+    font-size: var(--font-size-3xl);
+    font-weight: 800;
+    margin-bottom: var(--spacing-lg);
+    color: var(--white);
+}
+
+.use-cases-cta p {
+    font-size: var(--font-size-lg);
+    color: var(--gray-400);
+    margin-bottom: var(--spacing-2xl);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 /* Footer */
 .footer {
     background: var(--black);
@@ -839,6 +925,12 @@ section {
 
 .footer-logo i {
     color: var(--primary-light);
+}
+
+.footer-logo .logo-image {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
 }
 
 .footer-section h4 {
@@ -1036,6 +1128,11 @@ section {
         gap: var(--spacing-md);
     }
     
+    .use-cases-bullet-list {
+        max-width: 100%;
+        padding: 0 var(--spacing-lg);
+    }
+    
     .cta-buttons {
         flex-direction: column;
         align-items: center;
@@ -1087,6 +1184,15 @@ section {
     
     .university-card {
         padding: var(--spacing-lg);
+    }
+    
+    .use-cases-bullet-list li {
+        padding: var(--spacing-md) 0 var(--spacing-md) var(--spacing-xl);
+        font-size: var(--font-size-base);
+    }
+    
+    .use-cases-cta {
+        padding: var(--spacing-xl);
     }
 }
 
@@ -1146,4 +1252,6 @@ section {
 .slide-in-right.visible {
     opacity: 1;
     transform: translateX(0);
-} 
+}
+
+ 

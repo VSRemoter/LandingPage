@@ -79,8 +79,6 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => heroStats.classList.add('visible'), 1200);
     }
 
-
-
     // Button hover effects
     const buttons = document.querySelectorAll('.btn-primary, .btn-secondary');
     buttons.forEach(button => {
@@ -167,8 +165,6 @@ document.addEventListener('DOMContentLoaded', function() {
         sectionObserver.observe(section);
     });
 
-
-
     // Particle effect for hero section
     createParticles();
 
@@ -215,8 +211,9 @@ function animateCounter(element, start, end, suffix) {
     function updateCounter(currentTime) {
         const elapsed = currentTime - startTime;
         const progress = Math.min(elapsed / duration, 1);
+        const easeProgress = easeOutQuart(progress);
+        const current = Math.floor(start + (end - start) * easeProgress);
         
-        const current = Math.floor(start + (end - start) * easeOutQuart(progress));
         element.textContent = current + suffix;
         
         if (progress < 1) {
@@ -232,29 +229,99 @@ function easeOutQuart(t) {
     return 1 - Math.pow(1 - t, 4);
 }
 
-// Particle creation function
+// Particle effect for hero section
 function createParticles() {
-    const body = document.body;
-    if (!body) return;
+    const heroSection = document.querySelector('.hero');
+    if (!heroSection) return;
 
-    for (let i = 0; i < 100; i++) {
+    const particleCount = 50;
+    const particles = [];
+
+    for (let i = 0; i < particleCount; i++) {
         const particle = document.createElement('div');
         particle.className = 'particle';
-        particle.style.cssText = `
-            position: fixed;
-            width: ${Math.random() * 4 + 2}px;
-            height: ${Math.random() * 4 + 2}px;
-            background: rgba(230, 57, 70, ${Math.random() * 0.3 + 0.1});
-            border-radius: 50%;
-            left: ${Math.random() * 100}%;
-            top: ${Math.random() * 100}%;
-            pointer-events: none;
-            animation: particle-float ${Math.random() * 10 + 10}s infinite ease-in-out;
-            z-index: -1;
-        `;
-        body.appendChild(particle);
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.top = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 20 + 's';
+        particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+        heroSection.appendChild(particle);
+        particles.push(particle);
     }
 }
+
+// Throttle function for performance
+function throttle(func, limit) {
+    let inThrottle;
+    return function() {
+        const args = arguments;
+        const context = this;
+        if (!inThrottle) {
+            func.apply(context, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+        }
+    }
+}
+
+// Stripe Checkout Integration
+async function openStripeCheckout() {
+    try {
+        // Show loading state
+        const button = event.target;
+        const originalText = button.textContent;
+        button.textContent = 'Loading...';
+        button.disabled = true;
+
+        // Get user email (you can prompt for this or get it from a form)
+        const email = prompt('Please enter your email address:');
+        if (!email) {
+            button.textContent = originalText;
+            button.disabled = false;
+            return;
+        }
+
+        // Create checkout session
+        const response = await fetch('/create-checkout-session', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email }),
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to create checkout session');
+        }
+
+        const { sessionId } = await response.json();
+
+        // Redirect to Stripe Checkout
+        const stripe = Stripe('pk_test_51RgFlEIsm2NP1VPNrYR6KE80I8Ci4OKOWuQaz0NhB1aUSWHLi1KM9stp5vkToRQrPxhPZhNp9aUJPqbmdyzFrCDI00DvZwOpR7');
+        const { error } = await stripe.redirectToCheckout({ sessionId });
+
+        if (error) {
+            throw new Error(error.message);
+        }
+
+    } catch (error) {
+        console.error('Checkout error:', error);
+        alert('Error starting checkout: ' + error.message);
+        
+        // Reset button state
+        const button = event.target;
+        button.textContent = originalText;
+        button.disabled = false;
+    }
+}
+
+// Add click handlers to Pro plan buttons
+document.addEventListener('DOMContentLoaded', function() {
+    const proButtons = document.querySelectorAll('.btn-primary[onclick*="openPaymentModal"]');
+    proButtons.forEach(button => {
+        button.removeAttribute('onclick');
+        button.addEventListener('click', openStripeCheckout);
+    });
+});
 
 // Add CSS for additional animations
 const additionalStyles = `
@@ -379,24 +446,7 @@ const styleSheet = document.createElement('style');
 styleSheet.textContent = additionalStyles;
 document.head.appendChild(styleSheet);
 
-// Performance optimization: Throttle scroll events
-function throttle(func, limit) {
-    let inThrottle;
-    return function() {
-        const args = arguments;
-        const context = this;
-        if (!inThrottle) {
-            func.apply(context, args);
-            inThrottle = true;
-            setTimeout(() => inThrottle = false, limit);
-        }
-    }
-}
 
-// Apply throttling to scroll events
-window.addEventListener('scroll', throttle(function() {
-    // Scroll-based animations can be added here
-}, 16)); // ~60fps
 
 // Add loading animation
 window.addEventListener('load', function() {
@@ -446,4 +496,55 @@ const loadingStyles = `
 
 const loadingStyleSheet = document.createElement('style');
 loadingStyleSheet.textContent = loadingStyles;
-document.head.appendChild(loadingStyleSheet); 
+document.head.appendChild(loadingStyleSheet);
+
+// Stripe Checkout Integration
+async function openStripeCheckout() {
+    try {
+        // Show loading state
+        const button = event.target;
+        const originalText = button.textContent;
+        button.textContent = 'Loading...';
+        button.disabled = true;
+
+        // Get user email
+        const email = prompt('Please enter your email address:');
+        if (!email) {
+            button.textContent = originalText;
+            button.disabled = false;
+            return;
+        }
+
+        // Create checkout session
+        const response = await fetch('/create-checkout-session', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email }),
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to create checkout session');
+        }
+
+        const { sessionId } = await response.json();
+
+        // Redirect to Stripe Checkout
+        const stripe = Stripe('pk_test_51RgFlEIsm2NP1VPNrYR6KE80I8Ci4OKOWuQaz0NhB1aUSWHLi1KM9stp5vkToRQrPxhPZhNp9aUJPqbmdyzFrCDI00DvZwOpR7');
+        const { error } = await stripe.redirectToCheckout({ sessionId });
+
+        if (error) {
+            throw new Error(error.message);
+        }
+
+    } catch (error) {
+        console.error('Checkout error:', error);
+        alert('Error starting checkout: ' + error.message);
+        
+        // Reset button state
+        const button = event.target;
+        button.textContent = originalText;
+        button.disabled = false;
+    }
+} 

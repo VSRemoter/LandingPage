@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Cancelled - Redlight</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="cancel-container">
+        <div class="cancel-card">
+            <div class="cancel-icon">
+                <i class="fas fa-times-circle"></i>
+            </div>
+            <h1>Payment Cancelled</h1>
+            <p>No worries! Your payment was cancelled and you haven't been charged. You can try again anytime.</p>
+            
+            <div class="cancel-benefits">
+                <h3>Why choose Redlight Pro?</h3>
+                <ul>
+                    <li><i class="fas fa-rocket"></i> Boost your productivity by 3x</li>
+                    <li><i class="fas fa-brain"></i> AI-powered insights and suggestions</li>
+                    <li><i class="fas fa-infinity"></i> Unlimited storage and notes</li>
+                    <li><i class="fas fa-shield-alt"></i> Enterprise-grade security</li>
+                    <li><i class="fas fa-headset"></i> 24/7 priority support</li>
+                </ul>
+            </div>
+            
+            <div class="cancel-actions">
+                <a href="/" class="btn-primary">Try Again</a>
+                <a href="/#pricing" class="btn-secondary">View Plans</a>
+            </div>
+            
+            <div class="cancel-note">
+                <p><small>Questions? Contact us at <a href="mailto:support@redlight.com">support@redlight.com</a></small></p>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .cancel-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        
+        .cancel-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .cancel-icon {
+            font-size: 80px;
+            color: #f59e0b;
+            margin-bottom: 20px;
+        }
+        
+        .cancel-card h1 {
+            color: #1f2937;
+            margin-bottom: 15px;
+            font-size: 2rem;
+        }
+        
+        .cancel-card p {
+            color: #6b7280;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+        
+        .cancel-benefits {
+            text-align: left;
+            margin: 30px 0;
+            padding: 20px;
+            background: #f9fafb;
+            border-radius: 10px;
+        }
+        
+        .cancel-benefits h3 {
+            color: #1f2937;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        
+        .cancel-benefits ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .cancel-benefits li {
+            color: #374151;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .cancel-benefits i {
+            color: #667eea;
+            margin-right: 10px;
+            width: 20px;
+        }
+        
+        .cancel-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        
+        .cancel-note {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+        }
+        
+        .cancel-note p {
+            color: #9ca3af;
+            margin: 0;
+        }
+        
+        .cancel-note a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        .cancel-note a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 600px) {
+            .cancel-card {
+                padding: 30px 20px;
+            }
+            
+            .cancel-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</body>
+</html> 
